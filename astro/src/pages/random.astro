@@ -1,0 +1,15 @@
+---
+import Welcome from '../components/Welcome.astro'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout>
+  <main>
+    <section>
+      <h2>Random</h2>
+      <p hx-get="/test">
+        The quick brown fox jumped over the lazy dog.
+      </p>
+    </section>
+  </main>
+</Layout>

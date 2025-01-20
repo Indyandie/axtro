@@ -1,11 +1,34 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Welcome from '../components/Welcome.astro'
+import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-	<Welcome />
+  <header>
+    <h1>Axtro</h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="/random">
+            random
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>HTML Fragment</h2>
+      <p hx-get="/test">
+        HTML page partial. It includes <code>&lt;!DOCTYPE html&gt;</code>, Astro try to fill in the blanks.
+      </p>
+    </section>
+    <a href="/random">random</a>
+    <section>
+      <h2>Fragment</h2>
+      <p hx-get="/fragment">
+        Astro page partial. It doesn't include <code>&lt;!DOCTYPE html&gt;</code>
+      </p>
+    </section>
+  </main>
 </Layout>
