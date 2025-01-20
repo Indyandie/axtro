@@ -5,6 +5,23 @@
 
 Using Astro and htmx together on Deno (until my builds fail). I'll have my cake and eat too.
 
+## To Do
+
+- [ ] Add Astro API [endpoints](https://docs.astro.build/en/guides/endpoints/#server-endpoints-api-routes)
+  - RESTful CRUD
+  - [ ] `GET`
+  - [ ] `POST`
+  - [ ] `PUT`
+  - [ ] `PATCH`
+  - [ ] `DELETE`
+- [ ] htmx
+  - [ ] `hx-post`
+  - [ ] `hx-put`
+  - [ ] `hx-patch`
+  - [ ] `hx-delete`
+- [ ] Database
+  - [ ] SQLite
+
 ## Captains Log
 
 ### Adding htmx
