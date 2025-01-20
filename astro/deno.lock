@@ -1,7 +1,8 @@
 {
   "version": "4",
   "specifiers": {
-    "npm:astro@^5.1.7": "5.1.7_vite@6.0.7_zod@3.24.1"
+    "npm:astro@^5.1.7": "5.1.7_vite@6.0.7_zod@3.24.1",
+    "npm:htmx.org@2.0.4": "2.0.4"
   },
   "npm": {
     "@astrojs/compiler@2.10.3": {
@@ -935,6 +936,9 @@
     },
     "html-void-elements@3.0.0": {
       "integrity": "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="
+    },
+    "htmx.org@2.0.4": {
+      "integrity": "sha512-HLxMCdfXDOJirs3vBZl/ZLoY+c7PfM4Ahr2Ad4YXh6d22T5ltbTXFFkpx9Tgb2vvmWFMbIc3LqN2ToNkZJvyYQ=="
     },
     "http-cache-semantics@4.1.1": {
       "integrity": "sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ=="
@@ -2085,7 +2089,8 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:astro@^5.1.7"
+        "npm:astro@^5.1.7",
+        "npm:htmx.org@2.0.4"
       ]
     }
   }
