@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+import { db, Pokemon } from 'astro:db'
+
+const pokemon = await db.select().from(Pokemon)
+---
+
+<Layout>
+  <main>
+    <section>
+      <h2>Pokemon</h2>
+      {
+        pokemon.map(({ id, name }) => (
+          <article>
+            <p>{name} ({id})</p>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</Layout>
