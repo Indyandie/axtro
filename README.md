@@ -67,3 +67,11 @@ Example ([`html-fragment.html`](./astro/src/pages/html-fragment.html))
 > Astro gains an additional heart :heart: container for supporting this. The future is looking bright.
 
 The folks at astro provide great support via [page partials](https://docs.astro.build/en/basics/astro-pages/#page-partials).
+
+
+## Resources
+
+- Astro
+  - [Data Fetch](https://docs.astro.build/en/guides/data-fetching/)
+  - [Call Endpoints (server)](https://docs.astro.build/en/recipes/call-endpoints/)
+  - [Database](https://docs.astro.build/en/guides/astro-db/)
