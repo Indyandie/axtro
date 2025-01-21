@@ -75,3 +75,4 @@ The folks at astro provide great support via [page partials](https://docs.astro.
   - [Call Endpoints (server)](https://docs.astro.build/en/recipes/call-endpoints/)
   - [Database](https://docs.astro.build/en/guides/astro-db/)
     - [DB Guide](https://docs.astro.build/en/guides/astro-db/)
+    - [drizzle](https://orm.drizzle.team/docs/select)
