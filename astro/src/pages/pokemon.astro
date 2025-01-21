@@ -1,22 +1,45 @@
 ---
-import Layout from '../layouts/Layout.astro'
+export const partial = true
+
+// astro Content-Type was not one of "multipart/form-data" or "application/x-www-form-urlencoded".
+// https://stackoverflow.com/questions/78375098/content-type-was-not-one-of-multipart-form-data-or-application-x-www-form-url
+export const prerender = false
 
 import { db, Pokemon } from 'astro:db'
 
-const pokemon = await db.select().from(Pokemon)
+let pokemon = await db.select().from(Pokemon)
+
+if (Astro.request.method === 'POST') {
+  // Parse form data
+  const formData = await Astro.request.formData()
+  const name = formData.get('name')
+  const id = pokemon.length + 1
+
+  if (typeof name === 'string') {
+    await db.insert(Pokemon).values({ name, id })
+  }
+}
+
+pokemon = await db.select().from(Pokemon)
 ---
 
-<Layout>
-  <main>
-    <section>
-      <h2>Pokemon</h2>
-      {
-        pokemon.map(({ id, name }) => (
-          <article>
-            <p>{name} ({id})</p>
-          </article>
-        ))
-      }
-    </section>
-  </main>
-</Layout>
+<section id="pokemon-list">
+  <h2>Pokemon</h2>
+  <ul>
+    {
+      pokemon.map(({ id, name }) => (
+        <li>
+          <p>{name} ({id})</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <form hx-post="/pokemon" hx-swap="outerHTML show:top" hx-target="#pokemon-list" style="display: grid">
+    <label>pokemon
+      <input id="name" name="name" required />
+    </label>
+
+    <button type="submit">Add Pokemon</button>
+  </form>
+</section>
