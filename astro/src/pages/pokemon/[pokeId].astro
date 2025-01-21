@@ -1,0 +1,33 @@
+---
+export const partial = true
+export const prerender = false
+
+const { pokeId } = Astro.params
+import { db, eq, Pokemon } from 'astro:db'
+
+const [pokemon = { name: '', id: 0 }] = await db.select().from(Pokemon).where(eq(Pokemon.id, pokeId))
+const reqMethod = Astro.request.method
+
+const { name = 'Hello' } = pokemon
+const classId = name + pokeId || null
+
+if (reqMethod === 'DELETE') {
+  await db.delete(Pokemon).where(eq(Pokemon.id, pokeId))
+  Astro.response.headers.set('HX-Trigger', 'deletePokemon');
+}
+---
+
+{
+  (pokemon.id > 0 && reqMethod === 'GET') ? (
+    <article id={classId} class={classId}>
+      {name} ({pokeId})
+      <button
+        hx-delete={`/pokemon/${pokeId}`}
+        hx-swap="outerHTML"
+        hx-target={`find #${classId}, .${classId}`}
+      >
+        delete
+      </button>
+    </article>
+  ) : <article>Not found!</article>
+}
