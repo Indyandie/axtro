@@ -1,6 +1,6 @@
 ---
-import Welcome from '../components/Welcome.astro'
 import Layout from '../layouts/Layout.astro'
+export const prerender = false
 ---
 
 <Layout>
@@ -30,6 +30,7 @@ import Layout from '../layouts/Layout.astro'
         Astro page partial. It doesn't include <code>&lt;!DOCTYPE html&gt;</code>
       </p>
     </section>
-    <div hx-get="/pokemon" hx-trigger="load"></div>
+    <div hx-get="/pokemon/1" hx-trigger="load"></div>
+    <div hx-get="/pokemon" hx-trigger="load, deletePokemon from:body"></div>
   </main>
 </Layout>

@@ -28,14 +28,25 @@ pokemon = await db.select().from(Pokemon)
   <ul>
     {
       pokemon.map(({ id, name }) => (
-        <li>
+        <li class={name + id}>
           <p>{name} ({id})</p>
+          <button
+            hx-delete={`/pokemon/${id}`}
+            hx-swap="outerHTML"
+          >
+            delete
+          </button>
         </li>
       ))
     }
   </ul>
 
-  <form hx-post="/pokemon" hx-swap="outerHTML show:top" hx-target="#pokemon-list" style="display: grid">
+  <form
+    hx-post="/pokemon"
+    hx-swap="outerHTML show:top"
+    hx-target="#pokemon-list"
+    style="display: grid"
+  >
     <label>pokemon
       <input id="name" name="name" required />
     </label>
