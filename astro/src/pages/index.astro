@@ -16,21 +16,24 @@ export const prerender = false
       </ul>
     </nav>
   </header>
-  <main>
+  <main class="p-8">
     <section>
       <h2>HTML Fragment</h2>
       <p hx-get="/html-fragment">
         HTML page partial. It includes <code>&lt;!DOCTYPE html&gt;</code>, Astro try to fill in the blanks.
       </p>
     </section>
-    <a href="/random">random</a>
     <section>
       <h2>Fragment</h2>
       <p hx-get="/fragment">
         Astro page partial. It doesn't include <code>&lt;!DOCTYPE html&gt;</code>
       </p>
     </section>
-    <div hx-get="/pokemon/1" hx-trigger="load"></div>
-    <div hx-get="/pokemon" hx-trigger="load, deletePokemon from:body"></div>
+    <section>
+      <div hx-get="/pokemon/1" hx-trigger="load"></div>
+    </section>
+    <section>
+      <div hx-get="/pokemon" hx-trigger="load, deletePokemon from:body"></div>
+    </section>
   </main>
 </Layout>
