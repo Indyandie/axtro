@@ -5,22 +5,37 @@ export const prerender = false
 const { pokeId } = Astro.params
 import { db, eq, Pokemon } from 'astro:db'
 
-const [pokemon = { name: '', id: 0 }] = await db.select().from(Pokemon).where(eq(Pokemon.id, pokeId))
+const [pokemon] = await db.select().from(Pokemon).where(eq(Pokemon.id, pokeId))
 const reqMethod = Astro.request.method
 
-const { name = 'Hello' } = pokemon
+const {
+  name,
+  id,
+  weight,
+  height,
+  sprite,
+  cries,
+  types,
+  official,
+} = pokemon
 const classId = name + pokeId || null
 
 if (reqMethod === 'DELETE') {
   await db.delete(Pokemon).where(eq(Pokemon.id, pokeId))
-  Astro.response.headers.set('HX-Trigger', 'deletePokemon');
+  Astro.response.headers.set('HX-Trigger', 'deletePokemon')
 }
 ---
 
 {
   (pokemon.id > 0 && reqMethod === 'GET') ? (
     <article id={classId} class={classId}>
-      {name} ({pokeId})
+      <p>{name} ({id}) {official && 'official'}</p>
+      <img src={sprite} alt="">
+      <ul>
+        <li>{weight}</li>
+        <li>{height}</li>
+        <li>{types}</li>
+      </ul>
       <button
         hx-delete={`/pokemon/${pokeId}`}
         hx-swap="outerHTML"
