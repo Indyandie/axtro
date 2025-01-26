@@ -5,11 +5,14 @@ export const partial = true
 // https://stackoverflow.com/questions/78375098/content-type-was-not-one-of-multipart-form-data-or-application-x-www-form-url
 export const prerender = false
 
-import { db, Pokemon } from 'astro:db'
+import { db, like, Pokemon } from 'astro:db'
 
-let pokemon = await db.select().from(Pokemon)
+const { method, url } = Astro.request
 
-if (Astro.request.method === 'POST') {
+const urlObj = new URL(url)
+const query = urlObj.searchParams.get('q') || null
+
+if (method === 'POST') {
   // Parse form data
   const formData = await Astro.request.formData()
   const name = formData.get('name')
@@ -20,16 +23,39 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-pokemon = await db.select().from(Pokemon)
+const pokemon = !query
+  ? await db.select().from(Pokemon)
+    .limit(25)
+  : await db.select().from(Pokemon)
+    .where(
+      like(Pokemon.name, `%${query}%`)
+    ).limit(25)
 ---
 
-<section id="pokemon-list">
+<section id="pokemon-list" hx-get="/pokemon" hx-swap="outerHTML" hx-trigger="deletePokemon from:body">
   <h2>Pokemon</h2>
+
+  <div>{url} {query}</div>
+
+  <form
+    action="/pokemon"
+    method="GET"
+    hx-get="/pokemon"
+    hx-target="#pokemon-list"
+    hx-swap="outerHTML"
+  >
+    <label>
+      <input type="text" name="q">
+    </label>
+    <button>search</button>
+  </form>
+
   <ul>
     {
-      pokemon.map(({ id, name }) => (
+      pokemon.map(({ id, name, sprite, official }) => (
         <li class={name + id}>
-          <p>{name} ({id})</p>
+          <p>{name} ({id}) {official ? 'Official' : ''}</p>
+          <img src={sprite} alt="">
           <button
             hx-delete={`/pokemon/${id}`}
             hx-swap="outerHTML"
@@ -41,16 +67,16 @@ pokemon = await db.select().from(Pokemon)
     }
   </ul>
 
-  <form
-    hx-post="/pokemon"
-    hx-swap="outerHTML show:top"
-    hx-target="#pokemon-list"
-    style="display: grid"
-  >
-    <label>pokemon
-      <input id="name" name="name" required />
-    </label>
+  <!-- <form -->
+  <!-- hx-post="/pokemon" -->
+  <!-- hx-swap="outerHTML show:top" -->
+  <!-- hx-target="#pokemon-list" -->
+  <!-- style="display: grid" -->
+  <!-- > -->
+  <!-- <label>pokemon -->
+  <!-- <input id="name" name="name" required /> -->
+  <!-- </label> -->
 
-    <button type="submit">Add Pokemon</button>
-  </form>
+  <!-- <button type="submit">Add Pokemon</button> -->
+  <!-- </form> -->
 </section>

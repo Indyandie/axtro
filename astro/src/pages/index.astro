@@ -29,11 +29,6 @@ export const prerender = false
         Astro page partial. It doesn't include <code>&lt;!DOCTYPE html&gt;</code>
       </p>
     </section>
-    <section>
-      <div hx-get="/pokemon/1" hx-trigger="load"></div>
-    </section>
-    <section>
-      <div hx-get="/pokemon" hx-trigger="load, deletePokemon from:body"></div>
-    </section>
-  </main>
+    <section hx-get="/pokemon" hx-trigger="load, deletePokemon from:body" hx-swap="outerHTML"></section>
+  </main hx-target="outerHTML">
 </Layout>
