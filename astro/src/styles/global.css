@@ -14,7 +14,10 @@
     @apply text-blue-400 underline;
   }
   button {
-    @apply bg-blue-600 font-bold p-2;
+    @apply
+      bg-blue-600
+      font-bold p-2
+      cursor-pointer;
   }
   input {
     @apply bg-gray-700 p-2;
