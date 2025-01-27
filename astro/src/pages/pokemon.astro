@@ -1,82 +1,25 @@
 ---
-export const partial = true
-
-// astro Content-Type was not one of "multipart/form-data" or "application/x-www-form-urlencoded".
-// https://stackoverflow.com/questions/78375098/content-type-was-not-one-of-multipart-form-data-or-application-x-www-form-url
+import Layout from '../layouts/Layout.astro'
 export const prerender = false
-
-import { db, like, Pokemon } from 'astro:db'
-
-const { method, url } = Astro.request
-
-const urlObj = new URL(url)
-const query = urlObj.searchParams.get('q') || null
-
-if (method === 'POST') {
-  // Parse form data
-  const formData = await Astro.request.formData()
-  const name = formData.get('name')
-  const id = pokemon.length + 1
-
-  if (typeof name === 'string') {
-    await db.insert(Pokemon).values({ name, id })
-  }
-}
-
-const pokemon = !query
-  ? await db.select().from(Pokemon)
-    .limit(25)
-  : await db.select().from(Pokemon)
-    .where(
-      like(Pokemon.name, `%${query}%`)
-    ).limit(25)
 ---
 
-<section id="pokemon-list" hx-get="/pokemon" hx-swap="outerHTML" hx-trigger="deletePokemon from:body">
-  <h2>Pokemon</h2>
-
-  <div>{url} {query}</div>
-
-  <form
-    action="/pokemon"
-    method="GET"
-    hx-get="/pokemon"
-    hx-target="#pokemon-list"
-    hx-swap="outerHTML"
-  >
-    <label>
-      <input type="text" name="q">
-    </label>
-    <button>search</button>
-  </form>
-
-  <ul>
-    {
-      pokemon.map(({ id, name, sprite, official }) => (
-        <li class={name + id}>
-          <p>{name} ({id}) {official ? 'Official' : ''}</p>
-          <img src={sprite} alt="">
-          <button
-            hx-delete={`/pokemon/${id}`}
-            hx-swap="outerHTML"
-          >
-            delete
-          </button>
+<Layout>
+  <header>
+    <h1>Axtro</h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="/random">
+            random
+          </a>
+          <a href="/">
+            home
+          </a>
         </li>
-      ))
-    }
-  </ul>
-
-  <!-- <form -->
-  <!-- hx-post="/pokemon" -->
-  <!-- hx-swap="outerHTML show:top" -->
-  <!-- hx-target="#pokemon-list" -->
-  <!-- style="display: grid" -->
-  <!-- > -->
-  <!-- <label>pokemon -->
-  <!-- <input id="name" name="name" required /> -->
-  <!-- </label> -->
-
-  <!-- <button type="submit">Add Pokemon</button> -->
-  <!-- </form> -->
-</section>
+      </ul>
+    </nav>
+  </header>
+  <main class="p-8">
+    <section hx-get="/hx/pokemon" hx-trigger="load, deletePokemon from:body" hx-swap="outerHTML"></section>
+  </main hx-target="outerHTML">
+</Layout>

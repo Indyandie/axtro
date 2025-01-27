@@ -13,6 +13,11 @@ export const prerender = false
             random
           </a>
         </li>
+        <li>
+          <a href="/pokemon">
+            pokemon
+          </a>
+        </li>
       </ul>
     </nav>
   </header>
@@ -29,6 +34,5 @@ export const prerender = false
         Astro page partial. It doesn't include <code>&lt;!DOCTYPE html&gt;</code>
       </p>
     </section>
-    <section hx-get="/pokemon" hx-trigger="load, deletePokemon from:body" hx-swap="outerHTML"></section>
   </main hx-target="outerHTML">
 </Layout>
