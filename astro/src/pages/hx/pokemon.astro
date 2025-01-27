@@ -11,6 +11,8 @@ const { method, url } = Astro.request
 
 const urlObj = new URL(url)
 const query = urlObj.searchParams.get('q') || null
+const limit = Number(urlObj.searchParams.get('limit')) || 25
+const offset = Number(urlObj.searchParams.get('offset')) || 0
 
 if (method === 'POST') {
   // Parse form data
@@ -25,11 +27,16 @@ if (method === 'POST') {
 
 const pokemon = !query
   ? await db.select().from(Pokemon)
-    .limit(25)
+    .limit(limit)
+    .offset(offset)
   : await db.select().from(Pokemon)
     .where(
       like(Pokemon.name, `%${query}%`),
-    ).limit(25)
+    )
+    .limit(limit)
+    .offset(offset)
+
+const pokeCount = pokemon.length
 ---
 
 <section id="pokemon-list" hx-get="/hx/pokemon" hx-swap="outerHTML" hx-trigger="deletePokemon from:body">
@@ -38,11 +45,12 @@ const pokemon = !query
     action="/pokemon"
     method="GET"
     hx-get="/hx/pokemon"
-    hx-target="#pokemon-list"
+    hx-target="#pokemon-list ul"
+    hx-select="#pokemon-list ul"
     hx-swap="outerHTML"
   >
     <label>
-      <input type="text" name="q">
+      <input type="text" name="q" value={query ? query : ''}>
     </label>
     <button>search</button>
   </form>
@@ -51,7 +59,7 @@ const pokemon = !query
     {
       pokemon.map(({ id, name, sprite, official }) => (
         <li class={name + id}>
-          <p>{name} ({id}) {official ? 'Official' : ''}</p>
+          <p>{name} ({id}) {official && '👑'}</p>
           <img src={sprite} alt="">
           <button
             hx-delete={`/hx/pokemon/${id}`}
@@ -61,6 +69,19 @@ const pokemon = !query
           </button>
         </li>
       ))
+    }
+
+    {
+      (pokeCount === limit) ? (
+        <li
+          hx-get={`/hx/pokemon?${query ? 'q=' + query + '&' : ''}offset=${offset + limit}&limit=${limit}`}
+          hx-select="#pokemon-list ul > li"
+          hx-trigger="revealed"
+          hx-swap="outerHTML"
+        >
+          {pokeCount} loading...
+        </li>
+      ) : 'hello'
     }
   </ul>
 
