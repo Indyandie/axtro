@@ -14,10 +14,7 @@
     @apply text-blue-400 underline;
   }
   button {
-    @apply
-      bg-blue-600
-      font-bold p-2
-      cursor-pointer;
+    @apply bg-blue-600 font-bold p-2 cursor-pointer;
   }
   input {
     @apply bg-gray-700 p-2;
@@ -27,5 +24,11 @@
   }
   section {
     @apply mb-8;
+  }
+  dialog {
+    @apply p-4 m-auto;
+    @apply bg-black text-white;
+    @apply border-2 border-solid;
+    @apply backdrop:bg-amber-800 backdrop:opacity-50 backdrop:backdrop-blur-3xl;
   }
 }

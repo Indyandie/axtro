@@ -39,7 +39,12 @@ const pokemon = !query
 const pokeCount = pokemon.length
 ---
 
-<section id="pokemon-list" hx-get="/hx/pokemon" hx-swap="outerHTML" hx-trigger="deletePokemon from:body">
+<section
+  id="pokemon-list"
+  hx-get="/hx/pokemon"
+  hx-swap="outerHTML"
+  hx-trigger="deletePokemon from:body"
+>
   <h2>Pokemon</h2>
   <form
     action="/pokemon"
@@ -55,18 +60,28 @@ const pokeCount = pokemon.length
     <button>search</button>
   </form>
 
-  <ul>
+  <ul class="w-full grid grid-cols-4 grid-flow-row">
     {
       pokemon.map(({ id, name, sprite, official }) => (
         <li class={name + id}>
-          <p>{name} ({id}) {official && '👑'}</p>
-          <img src={sprite} alt="">
-          <button
-            hx-delete={`/hx/pokemon/${id}`}
+          <figure
+            hx-on:click="showPokeDialog()"
+            hx-get={`/hx/pokemon/${id}`}
+            hx-trigger="mousedown"
+            hx-target="#poke-dialog article"
             hx-swap="outerHTML"
           >
-            delete
-          </button>
+            <img src={sprite} alt="">
+            <figcaption>
+              <p>{name} ({id}) {official && '👑'}</p>
+            </figcaption>
+          </figure>
+          <!-- <button -->
+          <!-- hx-delete={`/hx/pokemon/${id}`} -->
+          <!-- hx-swap="outerHTML" -->
+          <!-- > -->
+          <!-- delete -->
+          <!-- </button> -->
         </li>
       ))
     }
@@ -81,7 +96,7 @@ const pokeCount = pokemon.length
         >
           {pokeCount} loading...
         </li>
-      ) : 'hello'
+      ) : ''
     }
   </ul>
 

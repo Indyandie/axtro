@@ -37,7 +37,7 @@ if (reqMethod === 'DELETE') {
         <li>{types}</li>
       </ul>
       <button
-        hx-delete={`/pokemon/${pokeId}`}
+        hx-delete={`/hx/pokemon/${pokeId}`}
         hx-swap="outerHTML"
         hx-target={`find #${classId}, .${classId}`}
       >

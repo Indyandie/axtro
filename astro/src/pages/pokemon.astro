@@ -4,6 +4,27 @@ export const prerender = false
 ---
 
 <Layout>
+  <dialog id="poke-dialog">
+    <article>Hello world!</article>
+    <form method="dialog">
+      <button>Ok</button>
+    </form>
+  </dialog>
+
+  <script is:inline>
+    // test
+  const pokeDialog = document.querySelector('#poke-dialog')
+  const showDialog = document.querySelector('#show-poke-dialog')
+
+  showDialog?.addEventListener('click', () => {
+    pokeDialog?.showModal()
+  })
+
+  function showPokeDialog() {
+    pokeDialog?.showModal()
+  }
+  </script>
+
   <header>
     <h1>Axtro</h1>
     <nav>
