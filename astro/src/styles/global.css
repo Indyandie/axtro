@@ -26,9 +26,9 @@
     @apply mb-8;
   }
   dialog {
-    @apply p-4 m-auto;
+    @apply p-8 m-auto;
     @apply bg-black text-white;
-    @apply border-2 border-solid;
-    @apply backdrop:bg-amber-800 backdrop:opacity-50 backdrop:backdrop-blur-3xl;
+    @apply border-1 border-solid border-slate-600;
+    @apply backdrop:bg-slate-800 backdrop:opacity-50 backdrop:backdrop-blur-3xl;
   }
 }
