@@ -1,4 +1,7 @@
 {
-  "nodeModulesDir": "auto"
+  "nodeModulesDir": "auto",
+  "unstable": [
+    "node-globals"
+  ]
 }
 
