@@ -28,21 +28,41 @@ if (reqMethod === 'DELETE') {
 
 {
   (pokemon.id > 0 && reqMethod === 'GET') ? (
-    <article id={classId} class={classId}>
-      <p>{name} ({id}) {official && 'official'}</p>
+    <article id={classId} class={`${classId} min-w-[300px]`}>
+      <h2>{name}</h2>
+      <p>
+        <code class="mr-3">
+          {id}
+        </code>
+        {official && '👑'}
+      </p>
       <img src={sprite} alt="">
-      <ul>
-        <li>{weight}</li>
-        <li>{height}</li>
-        <li>{types}</li>
-      </ul>
-      <button
-        hx-delete={`/hx/pokemon/${pokeId}`}
-        hx-swap="outerHTML"
-        hx-target={`find #${classId}, .${classId}`}
-      >
-        delete
-      </button>
+      <table class="my-8">
+        <tbody>
+          <tr>
+            <td>weight</td>
+            <td>{weight}</td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>{height}</td>
+          </tr>
+          <tr>
+            <td>types</td>
+            <td>{types}</td>
+          </tr>
+        </tbody>
+      </table>
+      <details class="my-4">
+        <summary>actions</summary>
+        <button
+          hx-delete={`/hx/pokemon/${pokeId}`}
+          hx-swap="outerHTML"
+          hx-target={`find #${classId}, .${classId}`}
+        >
+          delete
+        </button>
+      </details>
     </article>
   ) : <article>Not found!</article>
 }

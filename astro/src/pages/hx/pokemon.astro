@@ -53,6 +53,7 @@ const pokeCount = pokemon.length
     hx-target="#pokemon-list ul"
     hx-select="#pokemon-list ul"
     hx-swap="outerHTML"
+    class="mb-8"
   >
     <label>
       <input type="text" name="q" value={query ? query : ''}>
@@ -60,28 +61,26 @@ const pokeCount = pokemon.length
     <button>search</button>
   </form>
 
-  <ul class="w-full grid grid-cols-4 grid-flow-row">
+  <ul class="w-full grid grid-cols-4 grid-flow-row gap-4">
     {
       pokemon.map(({ id, name, sprite, official }) => (
-        <li class={name + id}>
+        <li class={`${name + id}`}>
           <figure
             hx-on:click="showPokeDialog()"
             hx-get={`/hx/pokemon/${id}`}
             hx-trigger="mousedown"
             hx-target="#poke-dialog article"
             hx-swap="outerHTML"
+            class="flex border-1 border-slate-700 cursor-pointer min-h-[96px] hover:bg-slate-800"
           >
-            <img src={sprite} alt="">
-            <figcaption>
-              <p>{name} ({id}) {official && '👑'}</p>
+            <img src={sprite} alt={name} class="bg-slate-900 mr-4">
+            <figcaption class="my-auto">
+              {name}
+              <br>
+              <code>{id}</code>
+              {official && '👑'}
             </figcaption>
           </figure>
-          <!-- <button -->
-          <!-- hx-delete={`/hx/pokemon/${id}`} -->
-          <!-- hx-swap="outerHTML" -->
-          <!-- > -->
-          <!-- delete -->
-          <!-- </button> -->
         </li>
       ))
     }
